@@ -8,7 +8,7 @@ use tokio_postgres::{Client, NoTls};
 
 #[derive(Serialize, Deserialize, Clone)]
 struct User {
-    id: i32,
+    id: Option<i32>,
     name: String,
     hashed_password: String,
 }
@@ -34,7 +34,7 @@ async fn get_users(conn: &State<Client>) -> Result<Json<Vec<User>>, Custom<Statu
 }
 
 async fn get_users_from_db(client: &Client) -> Result<Vec<User>, Custom<Status>> {
-    let users = client
+    let users: Vec<User> = client
         .query("SELECT id, name, hashed_password FROM users", &[])
         .await
         .map_err(|e| Custom(Status::InternalServerError))
@@ -44,7 +44,7 @@ async fn get_users_from_db(client: &Client) -> Result<Vec<User>, Custom<Status>>
             name: row.get(1),
             hashed_password: row.get(2),
         })
-        .collect::<Vec<User>>();
+        .collect();
 
     Ok(users)
 }
@@ -54,7 +54,7 @@ async fn update_user(
     id: i32,
     user: Json<User>,
     conn: &State<Client>,
-) -> Result<Json<User>, Custom<Status>> {
+) -> Result<Json<Vec<User>>, Custom<Status>> {
     execute_query(
         conn,
         "UPDATE users SET name = $1, hashed_password = $2 WHERE id = $3",
