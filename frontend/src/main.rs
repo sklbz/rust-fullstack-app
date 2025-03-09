@@ -71,6 +71,42 @@ fn app() -> Html {
             })
         })
     }
+    
+    let update_user = {
+        let users_state = user_state.clone();
+        let message = message.clone();
+        let get_users = get_users.clone();
+
+        Callback::from(move |_| {
+            let (name, hashed_password, editing_user_id) = users_state.as_ref().clone();
+            let user_state = users_state.clone();
+            let message = message.clone();
+            let get_users = get_users.clone();
+
+            if let Some(id) = editing_user_id {
+                spawn_local(async move {
+                    let response = Request::put(format!("127.0.0.1:8000/api/users/{}", id))
+                        .header("Content-Type", "application/json")
+                        .body(serde_json::to_string(&(id, name.as_str(), hashed_password.as_str())).unwrap())
+                        .send()
+                        .await;
+
+                    match response {
+                        Ok(response) if response.ok() => {
+                            message.send("User updated successfully".into());
+                            get_users.emit(());
+                        }
+
+                        _ => {
+                            message.send("Failed to update user".into());
+                        }
+                    }
+
+                    user_state.set(("".to_string(), "".to_string()), None);
+                })
+            }
+        })
+    }
 }
 
 fn main() {
