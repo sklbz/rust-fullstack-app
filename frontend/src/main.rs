@@ -70,7 +70,7 @@ fn app() -> Html {
                 user_state.set(("".to_string(), "".to_string()), None);
             })
         })
-    }
+    };
     
     let update_user = {
         let users_state = user_state.clone();
@@ -106,7 +106,35 @@ fn app() -> Html {
                 })
             }
         })
-    }
+    };
+
+    let delete_user = {
+        let message = message.clone();
+        let get_users = get_users.clone();
+
+        Callback::from(move |id: i32| {
+            let message = message.clone();
+            let get_users = get_users.clone();
+
+            spawn_local(async move {
+                let response = Request::delete(&format!("http://127.0.0.1:8000/api/users/{id}"))
+                    .send()
+                    .await;
+
+                match response {
+                    Ok(resp) if resp.ok() => {
+                        message.set("User deleted successfully".into());
+
+                        get_users.emit(());
+                    }
+
+                    _ => {
+                        message.set("Failed to delete user".into())
+                    }
+                }
+            })
+        })
+    };
 }
 
 fn main() {
