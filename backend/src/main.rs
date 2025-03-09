@@ -1,7 +1,6 @@
 #[macro_use]
 extern crate rocket;
 
-use rocket::execute;
 use rocket::serde::{Deserialize, Serialize, json::Json};
 use rocket::{State, http::Status, response::status::Custom};
 use rocket_cors::{AllowedOrigins, CorsOptions};
@@ -15,31 +14,30 @@ struct User {
 }
 
 #[post("/api/users", data = "<user>")]
-async fn add_user(user: Json<User>, conn: &State<Client>) -> Result<Json<User>, Custom<Status>> {
+async fn add_user(
+    user: Json<User>,
+    conn: &State<Client>,
+) -> Result<Json<Vec<User>>, Custom<Status>> {
     execute_query(
         conn,
-        "INSERT INTO users (name, hashed_password) VALUES ($1, $2) RETURNING id",
+        "INSERT INTO users (name, hashed_password) VALUES ($1, $2)",
         &[&user.name, &user.hashed_password],
     )
-    .await?;
+    .await;
+
     get_users(conn).await
 }
 
 #[get("/api/users")]
-async fn get_users(conn: &State<Client>) -> Result<Json<Vec<User>>, Custom<String>> {
+async fn get_users(conn: &State<Client>) -> Result<Json<Vec<User>>, Custom<Status>> {
     get_users_from_db(conn).await.map(Json)
 }
 
-async fn get_users_from_db(client: &Client) -> Result<Vec<User>, Custom<String>> {
+async fn get_users_from_db(client: &Client) -> Result<Vec<User>, Custom<Status>> {
     let users = client
         .query("SELECT id, name, hashed_password FROM users", &[])
         .await
-        .map_err(|e| {
-            Custom(
-                Status::InternalServerError,
-                format!("Database error: {}", e),
-            )
-        })
+        .map_err(|e| Custom(Status::InternalServerError))
         .iter()
         .map(|row| User {
             id: Some(row.get(0)),
@@ -62,14 +60,14 @@ async fn update_user(
         "UPDATE users SET name = $1, hashed_password = $2 WHERE id = $3",
         &[&user.name, &user.hashed_password, &id],
     )
-    .await?;
+    .await;
 
     get_users(conn).await
 }
 
 #[delete("/api/users/<id>")]
-async fn delete_user(id: i32, conn: &State<Client>) -> Result<Status, Custom<String>> {
-    execute_query(conn, "DELETE FROM users WHERE id = $1", &[&id]).await?;
+async fn delete_user(id: i32, conn: &State<Client>) -> Result<Status, Custom<Status>> {
+    execute_query(conn, "DELETE FROM users WHERE id = $1", &[&id]).await;
 
     Ok(Status::NoContent)
 }
@@ -79,12 +77,10 @@ async fn execute_query(
     query: &str,
     params: &[&(dyn tokio_postgres::types::ToSql + Sync)],
 ) -> Result<u64, Custom<String>> {
-    client.execute(query, params).await.map_err(|e| {
-        Custom(
-            Status::InternalServerError,
-            format!("Database error: {}", e),
-        )
-    })
+    client
+        .execute(query, params)
+        .await
+        .map_err(|e| Custom(Status::InternalServerError))
 }
 
 #[launch]
