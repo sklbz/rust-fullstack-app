@@ -1,0 +1,9 @@
+/home/sklbz/code/rust-tuto/rust-fullstack-app/backend/target/debug/deps/liblinux_raw_sys-043e282307c0153a.rmeta: /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/lib.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/elf.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/errno.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/general.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/ioctl.rs
+
+/home/sklbz/code/rust-tuto/rust-fullstack-app/backend/target/debug/deps/linux_raw_sys-043e282307c0153a.d: /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/lib.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/elf.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/errno.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/general.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/ioctl.rs
+
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/lib.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/elf.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/errno.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/general.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/linux-raw-sys-0.9.2/src/x86_64/ioctl.rs:

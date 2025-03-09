@@ -1,0 +1,13 @@
+/home/sklbz/code/rust-tuto/rust-fullstack-app/backend/target/debug/deps/libtoml-12fe90dc4d4373a4.rmeta: /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/lib.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/map.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/value.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/de.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/ser.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/macros.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/edit.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/fmt.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/table.rs
+
+/home/sklbz/code/rust-tuto/rust-fullstack-app/backend/target/debug/deps/toml-12fe90dc4d4373a4.d: /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/lib.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/map.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/value.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/de.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/ser.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/macros.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/edit.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/fmt.rs /home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/table.rs
+
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/lib.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/map.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/value.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/de.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/ser.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/macros.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/edit.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/fmt.rs:
+/home/sklbz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml-0.8.20/src/table.rs:
