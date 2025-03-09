@@ -34,17 +34,19 @@ async fn get_users(conn: &State<Client>) -> Result<Json<Vec<User>>, Custom<Strin
 }
 
 async fn get_users_from_db(client: &Client) -> Result<Vec<User>, Custom<String>> {
-    let users: Vec<User> = client
+    let rows = client
         .query("SELECT id, name, hashed_password FROM users", &[])
         .await
-        .map_err(|e| Custom(Status::InternalServerError, e.to_string()))
+        .map_err(|e| Custom(Status::InternalServerError, e.to_string()))?;
+
+    let users: Vec<User> = rows
         .iter()
         .map(|row| User {
             id: Some(row.get(0)),
             name: row.get(1),
             hashed_password: row.get(2),
         })
-        .collect();
+        .collect::<Vec<User>>();
 
     Ok(users)
 }
@@ -104,7 +106,7 @@ async fn rocket() -> _ {
             "CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
                 name TEXT NOT NULL,
-                email TEXT NOT NULL
+                hashed_password TEXT NOT NULL
             )",
             &[],
         )
