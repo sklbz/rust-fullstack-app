@@ -17,7 +17,7 @@ struct User {
 async fn add_user(
     user: Json<User>,
     conn: &State<Client>,
-) -> Result<Json<Vec<User>>, Custom<Status>> {
+) -> Result<Json<Vec<User>>, Custom<String>> {
     execute_query(
         conn,
         "INSERT INTO users (name, hashed_password) VALUES ($1, $2)",
@@ -29,15 +29,15 @@ async fn add_user(
 }
 
 #[get("/api/users")]
-async fn get_users(conn: &State<Client>) -> Result<Json<Vec<User>>, Custom<Status>> {
+async fn get_users(conn: &State<Client>) -> Result<Json<Vec<User>>, Custom<String>> {
     get_users_from_db(conn).await.map(Json)
 }
 
-async fn get_users_from_db(client: &Client) -> Result<Vec<User>, Custom<Status>> {
+async fn get_users_from_db(client: &Client) -> Result<Vec<User>, Custom<String>> {
     let users: Vec<User> = client
         .query("SELECT id, name, hashed_password FROM users", &[])
         .await
-        .map_err(|e| Custom(Status::InternalServerError))
+        .map_err(|e| Custom(Status::InternalServerError, e.to_string()))
         .iter()
         .map(|row| User {
             id: Some(row.get(0)),
@@ -54,7 +54,7 @@ async fn update_user(
     id: i32,
     user: Json<User>,
     conn: &State<Client>,
-) -> Result<Json<Vec<User>>, Custom<Status>> {
+) -> Result<Json<Vec<User>>, Custom<String>> {
     execute_query(
         conn,
         "UPDATE users SET name = $1, hashed_password = $2 WHERE id = $3",
@@ -66,7 +66,7 @@ async fn update_user(
 }
 
 #[delete("/api/users/<id>")]
-async fn delete_user(id: i32, conn: &State<Client>) -> Result<Status, Custom<Status>> {
+async fn delete_user(id: i32, conn: &State<Client>) -> Result<Status, Custom<String>> {
     execute_query(conn, "DELETE FROM users WHERE id = $1", &[&id]).await;
 
     Ok(Status::NoContent)
@@ -80,7 +80,7 @@ async fn execute_query(
     client
         .execute(query, params)
         .await
-        .map_err(|e| Custom(Status::InternalServerError))
+        .map_err(|e| Custom(Status::InternalServerError, e.to_string()))
 }
 
 #[launch]
@@ -99,17 +99,17 @@ async fn rocket() -> _ {
     });
 
     // Create the table if it doesn't exist
-    execute_query(
-        &client,
-        "CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            name TEXT NOT NULL,
-            hashed_password TEXT NOT NULL
-        )",
-        &[],
-    )
-    .await
-    .expect("Unable to create table");
+    client
+        .execute(
+            "CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL
+            )",
+            &[],
+        )
+        .await
+        .expect("Failed to create table");
 
     let cors = CorsOptions::default()
         .allowed_origins(AllowedOrigins::all())
